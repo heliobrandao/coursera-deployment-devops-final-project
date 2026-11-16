@@ -3,9 +3,11 @@ using LogiTrack.Dtos;
 using LogiTrack.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LogiTrack.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/orders")]
 public class OrderController : ControllerBase
@@ -49,6 +51,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager")]
     public async Task<ActionResult<Order>> Create(
         CreateOrderRequest request
     )
@@ -115,6 +118,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Manager")]
     public async Task<IActionResult> Delete(int id)
     {
         var order = await _context.Orders

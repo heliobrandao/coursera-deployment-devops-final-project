@@ -1,9 +1,11 @@
 using LogiTrack.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LogiTrack.Data;
 
-public class LogiTrackContext : DbContext
+public class LogiTrackContext
+    : IdentityDbContext<ApplicationUser>
 {
     public LogiTrackContext(
         DbContextOptions<LogiTrackContext> options
@@ -11,11 +13,15 @@ public class LogiTrackContext : DbContext
     {
     }
 
-    public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
+    public DbSet<InventoryItem> InventoryItems =>
+        Set<InventoryItem>();
 
-    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<Order> Orders =>
+        Set<Order>();
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(
+        ModelBuilder modelBuilder
+    )
     {
         base.OnModelCreating(modelBuilder);
 
